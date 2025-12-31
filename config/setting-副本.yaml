@@ -1,0 +1,63 @@
+# 模块配置
+environments:
+  main_env: segdesign
+  hmmer: segdesign
+  rfdiffusion: segdesign_SE3nv
+  rfdiffusion_report: segdesign
+  mpnn: segdesign_mpnn
+  mpnn_report: segdesign
+  dssp: segdesign
+  cluster_analysis: segdesign
+  esmfold: segdesign_esmfold
+  esmfold_report: segdesign
+
+
+# 模块默认参数
+hmmer:
+  args:
+    output_folder: hmmer_out
+    minimum_sequence_coverage: 50
+    minimum_column_coverage: 70
+
+rfdiffusion:
+  args:
+    #dssp_analyse:
+         #- yes
+    run_inference_path: "/home/xieweilong/RFdiffusion/scripts/run_inference.py"
+    output_folder: rfdiffusion_out
+    diffuser.partial_T: 50
+    
+mpnn:
+  args:
+    parse_multiple_chains_path: "./ProteinMPNN/helper_scripts/parse_multiple_chains.py"
+    assign_fixed_chains_path: "./ProteinMPNN/helper_scripts/assign_fixed_chains.py"
+    make_fixed_positions_dict_path: "./ProteinMPNN/helper_scripts/make_fixed_positions_dict.py"
+    protein_mpnn_run_path: "./ProteinMPNN/protein_mpnn_run.py"
+    pdb_folder: 
+    output_folder: mpnn_out
+
+mmseqs:
+  args:
+    threads: 8
+    min_seq_id: 0.8
+    cov_mode: 0
+    coverage: 0.8
+    mmseqs_path: mmseqs
+    sensitivity: 4.0
+
+dssp:
+  args:
+    output_folder: dssp_out
+
+cluster_analysis:
+  args:
+    output_folder: "cluster_analysis_out"
+    start: 70
+    end: 100
+
+esmfold:
+  args:
+    output_folder: esmfold_out
+    original_protein_chain_path: 
+    seq_range_str: 
+

@@ -1,0 +1,34 @@
+project:
+  anaconda_path: /opt/software/anaconda3
+  input_pdb: ./Dusp4.pdb
+  output_dir: ./Dusp4_example
+  chain: A
+  sequence_length: 394
+  segment: 346-394  # 如果为None则只执行profile部分分析，不跑后续设计
+
+profile:
+  database: ./uniprot_sprot.fasta
+  bitscore: 0.3
+  n_iter: 5
+  cpu: 10
+  threshold: 0.6
+
+rfdiffusion:
+  helix: False
+  strand: True
+  num_designs: 10
+  threshold: 0.04
+
+mpnn:
+  num_seq_per_target: 20
+  sampling_temp: 0.3
+  seed: 42
+  top_percent: 0.9
+
+mmseqs:
+  min_seq_id: 0.8
+  s: 7.5
+  c: 1.0
+
+esmfold:
+  plddt_threshold: 70

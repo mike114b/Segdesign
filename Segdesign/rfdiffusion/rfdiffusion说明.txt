@@ -1,0 +1,132 @@
+RFdiffusion run_inference.py 参数详解
+以下是基于您提供的配置信息的完整参数解释，按配置组分类：
+
+1. inference 组 (推理设置)
+input_pdb: 输入PDB文件路径。默认为null，必须指定。
+num_designs: 生成的设计数量。默认为10。
+design_startnum: 设计起始编号（输出文件序号）。默认为0。
+ckpt_override_path: 覆盖模型检查点的路径。默认为null（使用默认检查点）。
+symmetry: 对称性设置（如C3表示三重对称）。默认为null。
+recenter: 是否将蛋白质中心平移到原点。默认为true。
+radius: 设计时考虑的中心残基半径（Å）。默认为10.0。
+model_only_neighbors: 是否仅考虑中心残基的邻居。默认为false（考虑整个结构）。
+output_prefix: 输出文件前缀。默认为"samples/design"。
+write_trajectory: 是否写入轨迹（中间结构）。默认为true。
+scaffold_guided: 是否使用支架引导（scaffold-guided）设计。默认为false。
+model_runner: 模型运行器类型（如SelfConditioning）。默认为SelfConditioning。
+cautious: 谨慎模式（可能进行额外检查）。默认为true。
+align_motif: 是否对主题（motif）进行对齐。默认为true。
+symmetric_self_cond: 是否使用对称自条件。默认为true。
+final_step: 最终采样步骤（1表示最后一步）。默认为1。
+deterministic: 是否使用确定性采样（减少随机性）。默认为false。
+trb_save_ckpt_path: 保存训练检查点的路径（用于TRB）。默认为null。
+schedule_directory_path: 自定义扩散调度表的目录路径。默认为null。
+model_directory_path: 自定义模型目录路径。默认为null。
+cyclic: 是否设计环状蛋白质。默认为false。
+cyc_chains: 环状蛋白质的链标识符。默认为"a"。
+
+2. contigmap 组 (连续区域映射)
+contigs: 定义设计区域的连续区（contig）字符串列表。例如：["A1-100"]。默认为null（必须指定）。
+inpaint_seq: 序列重设计区域（残基范围列表）。例如：["A30-40"]。默认为null。
+inpaint_str: 结构重设计区域（残基范围列表）。例如：["A30-40"]。默认为null。
+inpaint_str_helix: 指定为螺旋的结构重设计区域。默认为null。
+inpaint_str_strand: 指定为折叠的结构重设计区域。默认为null。
+inpaint_str_loop: 指定为环区的结构重设计区域。默认为null。
+provide_seq: 提供固定序列的区域（残基范围及序列）。默认为null。
+length: 设计的总长度（残基数）。默认为null（自动确定）。
+
+3. model 组 (模型架构)
+n_extra_block: 额外块的数量。默认为4。
+n_main_block: 主块的数量。默认为32。
+n_ref_block: 参考块的数量。默认为4。
+d_msa: MSA表示的维度。默认为256。
+d_msa_full: 完整MSA的维度。默认为64。
+d_pair: 残基对表示的维度。默认为128。
+d_templ: 模板特征的维度。默认为64。
+n_head_msa: MSA注意力的头数。默认为8。
+n_head_pair: 残基对注意力的头数。默认为4。
+n_head_templ: 模板注意力的头数。默认为4。
+d_hidden: 隐藏层维度。默认为32。
+d_hidden_templ: 模板隐藏层维度。默认为32。
+p_drop: Dropout概率。默认为0.15。
+SE3_param_full: 完整图的SE(3)变换参数（字典）：
+num_layers: 层数（默认为1）
+num_channels: 通道数（默认为32）
+num_degrees: 度数（默认为2）
+n_heads: 注意力头数（默认为4）
+div: 除因子（默认为4）
+l0_in_features: 层0输入特征（默认为8）
+l0_out_features: 层0输出特征（默认为8）
+l1_in_features: 层1输入特征（默认为3）
+l1_out_features: 层1输出特征（默认为2）
+num_edge_features: 边特征数（默认为32）
+SE3_param_topk: TopK图的SE(3)变换参数（类似SE3_param_full）。默认为特定参数。
+freeze_track_motif: 是否冻结跟踪主题。默认为false。
+use_motif_timestep: 是否使用主题时间步。默认为false。
+
+4. diffuser 组 (扩散过程)
+T: 扩散总步数。默认为50。
+b_0: 起始噪声水平（线性调度）。默认为0.01。
+b_T: 最终噪声水平（线性调度）。默认为0.07。
+schedule_type: 噪声调度类型（如线性）。默认为"linear"。
+so3_type: SO(3)扩散类型（如igso3）。默认为"igso3"。
+crd_scale: 坐标缩放因子。默认为0.25。
+partial_T: 部分扩散步数（用于部分扩散）。默认为null（不使用）。
+so3_schedule_type: SO(3)噪声调度类型。默认为"linear"。
+min_b: 最小噪声水平（用于其他调度）。默认为1.5。
+max_b: 最大噪声水平（用于其他调度）。默认为2.5。
+min_sigma: 最小噪声标准差（用于其他调度）。默认为0.02。
+max_sigma: 最大噪声标准差（用于其他调度）。默认为1.5。
+
+5. denoiser 组 (去噪过程)
+noise_scale_ca: CA原子噪声尺度。默认为1。
+final_noise_scale_ca: 最终CA原子噪声尺度。默认为1。
+ca_noise_schedule_type: CA噪声调度类型（如常数）。默认为"constant"。
+noise_scale_frame: 框架噪声尺度。默认为1。
+final_noise_scale_frame: 最终框架噪声尺度。默认为1。
+frame_noise_schedule_type: 框架噪声调度类型。默认为"constant"。
+
+6. ppi 组 (蛋白质-蛋白质相互作用)
+hotspot_res: 热点残基（固定或约束残基）。例如：["A30-40"]。默认为null。
+
+7. potentials 组 (引导势)
+guiding_potentials: 引导势类型（如二级结构）。默认为null。
+guide_scale: 引导势的缩放因子（强度）。默认为10。
+guide_decay: 引导势衰减方式（如常数）。默认为"constant"。
+olig_inter_all: 寡聚体间接触势。默认为null。
+olig_intra_all: 寡聚体内接触势。默认为null。
+olig_custom_contact: 自定义寡聚体接触势。默认为null。
+substrate: 底物约束。默认为null。
+
+8. contig_settings 组 (连续区设置)
+ref_idx: 参考索引（残基索引列表）。默认为null。
+hal_idx: 半链索引（残基索引列表）。默认为null。
+idx_rf: RF索引（残基索引列表）。默认为null。
+inpaint_seq_tensor: 序列重设计区域的张量。默认为null（自动生成）。
+
+9. preprocess 组 (预处理)
+sidechain_input: 是否输入侧链原子。默认为false。
+motif_sidechain_input: 是否输入主题的侧链原子。默认为true。
+d_t1d: 一维模板特征的维度。默认为22。
+d_t2d: 二维模板特征的维度。默认为44。
+prob_self_cond: 自条件概率。默认为0.0。
+str_self_cond: 是否使用结构自条件。默认为false。
+predict_previous: 是否预测前一步。默认为false。
+
+10. logging 组 (日志)
+inputs: 是否记录输入。默认为false。
+11. scaffoldguided 组 (支架引导)
+scaffoldguided: 是否启用支架引导设计。默认为false。
+target_pdb: 目标PDB（支架引导）。默认为false。
+target_path: 目标PDB路径（支架引导）。默认为null。
+scaffold_list: 支架列表（文件路径）。默认为null。
+scaffold_dir: 支架目录。默认为null。
+sampled_insertion: 采样插入长度。默认为0。
+sampled_N: N端采样长度。默认为0。
+sampled_C: C端采样长度。默认为0。
+ss_mask: 二级结构掩码（用于支架引导）。默认为0。
+systematic: 是否系统化采样。默认为false。
+target_ss: 目标二级结构（文件路径）。默认为null。
+target_adj: 目标邻接矩阵（文件路径）。默认为null。
+mask_loops: 是否掩蔽环区。默认为true。
+contig_crop: 连续区裁剪设置。默认为null。
