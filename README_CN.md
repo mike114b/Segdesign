@@ -46,7 +46,7 @@ SegDesign/
 - **Conda/Miniconda**：环境管理必需
 - **GPU**：NVIDIA GPU 且支持 CUDA（强烈推荐用于 ESMFold 和 RFdiffusion）
 - **内存**：至少 16GB RAM（推荐 32GB 以上）
-- **存储**：至少 50GB 可用空间
+- **存储**：至少 200GB 可用空间
 
 ### 安装步骤
 
