@@ -105,13 +105,13 @@ def load_backbone_data_from_rfdiffusion(working_dir, rfdiffusion_report_path = N
     backbone_data = {}
     try:
         # 构建rfdiffusion_report.csv的完整路径
-        if rfdiffusion_report_path is None:
+        if rfdiffusion_report_path == 'None' or rfdiffusion_report_path is None:
             rf_report_path = os.path.join(working_dir, 'rfdiffusion_report.csv')
         else:
             rf_report_path = rfdiffusion_report_path
-        if not os.path.exists(rf_report_path):
+        #if not os.path.exists(rf_report_path):
             # 尝试其他可能的路径
-            rf_report_path = os.path.join(working_dir, 'rfdiffusion_out', 'rfdiffusion_report.csv')
+           # rf_report_path = os.path.join(working_dir, 'rfdiffusion_out', 'rfdiffusion_report.csv')
         
         if os.path.exists(rf_report_path):
             df_rf = pd.read_csv(rf_report_path)
@@ -262,7 +262,7 @@ def process_all_fasta_files(seq_folder, output_folder, top_percent, rfdiffusion_
     print(f"输入文件夹：{seq_folder}")
     print(f"输出文件夹：{output_folder}")
     
-    # 获取工作目录
+    # 获取工作目录（假设seq_folder在工作目录下的mpnn_out/seqs）
     working_dir = output_folder.rsplit('/', 1)[0]
     print(f"工作目录：{working_dir}")
     

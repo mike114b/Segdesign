@@ -388,7 +388,7 @@ def report_csv(pdb_folder, dssp_csv_folder, start_res, end_res, ss, threshold, f
         "success_backbone": success_backbone_l
     }
     df_data = pd.DataFrame(df_data)
-    df_data.to_csv(f'{out_folder}/rfdiffusion_report.csv')
+    df_data.to_csv(f'{out_folder}/rfdiffusion_report.csv', index=False)
     return
 
 
