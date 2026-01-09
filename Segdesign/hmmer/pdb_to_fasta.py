@@ -79,8 +79,10 @@ def pdb_to_fasta(pdb_file, fasta_file):
     except FileNotFoundError:
         print(f"错误: 文件 '{pdb_file}' 未找到")
         return
-
     # 写入FASTA文件
+    folder = fasta_file.rsplit('/',1)[0]
+    if not os.path.exists(folder):
+        os.makedirs(folder, exist_ok=True)
     with open(fasta_file, 'w') as out:
         for chain_id, seq in chains.items():
             # 生成FASTA头部

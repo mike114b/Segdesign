@@ -262,7 +262,7 @@ def process_all_fasta_files(seq_folder, output_folder, top_percent, rfdiffusion_
     print(f"输入文件夹：{seq_folder}")
     print(f"输出文件夹：{output_folder}")
     
-    # 获取工作目录（假设seq_folder在工作目录下的mpnn_out/seqs）
+    # 获取工作目录
     working_dir = output_folder.rsplit('/', 1)[0]
     print(f"工作目录：{working_dir}")
     
